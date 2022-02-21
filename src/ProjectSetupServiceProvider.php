@@ -18,9 +18,5 @@ class ProjectSetupServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/setup-project.php',
-            'project-setup'
-        );
     }
 }

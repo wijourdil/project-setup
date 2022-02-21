@@ -13,7 +13,10 @@
     "autoload": {
         "psr-4": {
             "Wijourdil\\ProjectSetup\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "authors": [
         {
@@ -24,7 +27,8 @@
     "require": {
         "php": "^8.0",
         "illuminate/console": "^8.0|^9.0",
-        "illuminate/support": "^8.0|^9.0"
+        "illuminate/support": "^8.0|^9.0",
+        "ext-readline": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^7.0"
