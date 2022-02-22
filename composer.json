@@ -18,6 +18,11 @@
             "src/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Wijourdil\\ProjectSetup\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Wilfried Jourdil",
@@ -31,7 +36,8 @@
         "ext-readline": "*"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.0"
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "laravel": {
