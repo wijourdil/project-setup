@@ -18,7 +18,7 @@ class CreateMakefile implements Executable
         }
 
         copy(
-            setup_package_stub_path("Makefile.$framework.stub"),
+            setup_package_stub_path("makefile/Makefile.$framework.stub"),
             base_path('Makefile')
         );
     }

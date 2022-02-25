@@ -4,6 +4,7 @@ namespace Wijourdil\ProjectSetup\Console\Commands;
 
 use Illuminate\Console\Command;
 use Wijourdil\ProjectSetup\Services\TaskRunner;
+use Wijourdil\ProjectSetup\Tasks\CreateGithubActionsWorkflows;
 use Wijourdil\ProjectSetup\Tasks\CreateMakefile;
 use Wijourdil\ProjectSetup\Tasks\DeleteDefaultPhpunitTests;
 use Wijourdil\ProjectSetup\Tasks\InstallAssertPackage;
@@ -52,6 +53,7 @@ class SetupCommand extends Command
 
             // Prepare project files
             new CreateMakefile(),
+            new CreateGithubActionsWorkflows(),
             new DeleteDefaultPhpunitTests(),
         ];
     }

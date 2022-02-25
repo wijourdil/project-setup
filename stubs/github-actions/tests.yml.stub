@@ -1,0 +1,71 @@
+name: tests
+on: [push]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Setup
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+
+      - uses: actions/checkout@v2
+
+      # Cache npm dependencies
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Cache composer dependencies
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      # Preparing environment
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Starting MySQL
+        run: sudo systemctl start mysql.service
+
+      - name: Creating database
+        run: echo "CREATE DATABASE homestead;" | mysql -uroot -proot
+
+      - name: Building assets
+        run: |
+          npm install
+          npm run production
+
+      - name: Installing PHP dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Tests migrations
+        run: |
+          php artisan migrate:fresh
+          php artisan migrate:rollback
+          php artisan migrate
+
+      # Tests
+      - name: Running phpcs
+        run: ./vendor/bin/phpcs --report=full
+
+      - name: Running phpstan
+        run: ./vendor/bin/phpstan analyse --memory-limit=2G
+
+      - name: Running phpunit
+        run: ./vendor/bin/phpunit --no-coverage

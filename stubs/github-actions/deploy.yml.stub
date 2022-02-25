@@ -1,0 +1,21 @@
+name: deploy
+on:
+  workflow_dispatch:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Deploy webhook
+      - name: Call deploy webhook
+        run: |
+          curl --request POST \
+            --url ${{ secrets.DEPLOY_URL }} \
+            --header 'Content-Type: application/json' \
+            --data '{
+              "api_token": "${{ secrets.DEPLOY_AUTH_TOKEN }}",
+              "key": "${{ secrets.DEPLOY_KEY }}"
+            }' \
+            --fail
+
