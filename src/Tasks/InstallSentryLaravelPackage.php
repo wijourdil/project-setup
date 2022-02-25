@@ -5,10 +5,12 @@ namespace Wijourdil\ProjectSetup\Tasks;
 use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerPackageInstaller;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Configurable;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Outputable;
+use Wijourdil\ProjectSetup\Tasks\Traits\CanDetermineFramework;
 use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
 class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Configurable, Outputable
 {
+    use CanDetermineFramework;
     use CanWriteToOutput;
 
     function packageName(): string
@@ -36,10 +38,5 @@ class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Co
         ]);
 
         readline();
-    }
-
-    private function isLumen(): bool
-    {
-        return str_contains(app()->version(), 'Lumen');
     }
 }

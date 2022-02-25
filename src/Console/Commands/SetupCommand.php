@@ -4,6 +4,7 @@ namespace Wijourdil\ProjectSetup\Console\Commands;
 
 use Illuminate\Console\Command;
 use Wijourdil\ProjectSetup\Services\TaskRunner;
+use Wijourdil\ProjectSetup\Tasks\CreateMakefile;
 use Wijourdil\ProjectSetup\Tasks\DeleteDefaultPhpunitTests;
 use Wijourdil\ProjectSetup\Tasks\InstallAssertPackage;
 use Wijourdil\ProjectSetup\Tasks\InstallCodeSnifferPackage;
@@ -50,6 +51,7 @@ class SetupCommand extends Command
             new InstallLaravelSailPackage(),
 
             // Prepare project files
+            new CreateMakefile(),
             new DeleteDefaultPhpunitTests(),
         ];
     }
