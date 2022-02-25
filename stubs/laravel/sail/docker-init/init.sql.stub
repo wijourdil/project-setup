@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `homestead`;
+CREATE DATABASE IF NOT EXISTS `homestead_test`;
+
+CREATE USER 'sail'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'sail'@'%';

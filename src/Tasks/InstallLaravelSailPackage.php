@@ -14,8 +14,17 @@ class InstallLaravelSailPackage extends ComposerDevPackageInstaller implements C
 
     public function configure(): void
     {
-        // TODO à faire :
-        //  - publier le fichier docker-compose
-        //  - publier le fichier init sql pour créer les bdd
+        copy(
+            setup_package_stub_path("laravel/sail/docker-compose.yml.stub"),
+            base_path("docker-compose.yml")
+        );
+
+        if (!file_exists(base_path("docker-init"))) {
+            mkdir(base_path("docker-init"));
+        }
+        copy(
+            setup_package_stub_path("laravel/sail/docker-init/init.sql.stub"),
+            base_path("docker-init/init.sql")
+        );
     }
 }
