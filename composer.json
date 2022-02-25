@@ -1,6 +1,6 @@
 {
     "name": "wijourdil/project-setup",
-    "description": "...",
+    "description": "This package provides a command to install and configure automatically all the useful packages for a Laravel / Lumen project",
     "keywords": [
         "laravel",
         "lumen",
