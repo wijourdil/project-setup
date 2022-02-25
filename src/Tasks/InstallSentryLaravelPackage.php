@@ -13,7 +13,7 @@ class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Co
     use CanDetermineFramework;
     use CanWriteToOutput;
 
-    function packageName(): string
+    protected function packageName(): string
     {
         return 'sentry/sentry-laravel';
     }

@@ -9,8 +9,7 @@ use Wijourdil\ProjectSetup\Tasks\Contracts\Outputable;
 use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteInFiles;
 use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
-class InstallWebmozartAssertPhpstanRulePackage extends ComposerDevPackageInstaller
-    implements Configurable, Dependable, Outputable
+class InstallWebmozartAssertPhpstanRulePackage extends ComposerDevPackageInstaller implements Configurable, Dependable, Outputable
 {
     use CanWriteInFiles;
     use CanWriteToOutput;

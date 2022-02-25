@@ -18,7 +18,7 @@ class TaskRunner
 {
     use InteractsWithIO;
 
-    /** @var object[] */
+    /** @var class-string[] */
     protected array $executedTasks = [];
 
     public function __construct()
@@ -72,12 +72,13 @@ class TaskRunner
         $this->executedTasks[] = $task::class;
     }
 
-    protected function checkTaskDependencies(object $task): void
+    protected function checkTaskDependencies(Dependable $task): void
     {
         foreach ($task->dependsOn() as $dependency) {
             if (!in_array($dependency, $this->executedTasks)) {
                 throw new RuntimeException(
-                    "Cannot execute task " . $task::class . " because its dependency {$dependency} was not executed before"
+                    "Cannot execute task " . $task::class
+                    . " because its dependency {$dependency} was not executed before"
                 );
             }
         }

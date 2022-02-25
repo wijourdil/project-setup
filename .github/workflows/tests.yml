@@ -1,0 +1,41 @@
+name: tests
+on: [push]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+
+      - uses: actions/checkout@v2
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Installing PHP dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Running phpcs
+        run: ./vendor/bin/phpcs --report=full
+
+      - name: Running phpstan
+        run: ./vendor/bin/phpstan analyse --memory-limit=2G
+
+      - name: Running phpunit
+        run: ./vendor/bin/phpunit --no-coverage

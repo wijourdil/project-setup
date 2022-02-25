@@ -6,7 +6,7 @@ use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerPackageInstaller;
 
 class InstallAssertPackage extends ComposerPackageInstaller
 {
-    function packageName(): string
+    protected function packageName(): string
     {
         return 'webmozart/assert';
     }
