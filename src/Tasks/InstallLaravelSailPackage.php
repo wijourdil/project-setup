@@ -15,16 +15,16 @@ class InstallLaravelSailPackage extends ComposerDevPackageInstaller implements C
     public function configure(): void
     {
         copy(
-            setup_package_stub_path("packages/laravel/sail/docker-compose.yml.stub"),
-            base_path("docker-compose.yml")
+            setup_package_stub_path('packages/laravel/sail/docker-compose.yml.stub'),
+            base_path('docker-compose.yml')
         );
 
-        if (!file_exists(base_path("docker-init"))) {
-            mkdir(base_path("docker-init"));
+        if (!file_exists(base_path('docker-init'))) {
+            mkdir(base_path('docker-init'));
         }
         copy(
-            setup_package_stub_path("packages/laravel/sail/docker-init/init.sql.stub"),
-            base_path("docker-init/init.sql")
+            setup_package_stub_path('packages/laravel/sail/docker-init/init.sql.stub'),
+            base_path('docker-init/init.sql')
         );
     }
 }

@@ -19,10 +19,10 @@ class InstallCodeSnifferPackage extends ComposerDevPackageInstaller implements C
     public function configure(): void
     {
         copy(
-            setup_package_stub_path("packages/squizlabs/php_codesniffer/phpcs.xml.stub"),
-            base_path("phpcs.xml")
+            setup_package_stub_path('packages/squizlabs/php_codesniffer/phpcs.xml.stub'),
+            base_path('phpcs.xml')
         );
 
-        $this->info("Generated file " . base_path("phpcs.xml") . " for package {$this->packageName()}.");
+        $this->info('Generated file ' . base_path('phpcs.xml') . " for package {$this->packageName()}.");
     }
 }

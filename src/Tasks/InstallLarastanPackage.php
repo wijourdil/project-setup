@@ -19,10 +19,10 @@ class InstallLarastanPackage extends ComposerDevPackageInstaller implements Conf
     public function configure(): void
     {
         copy(
-            setup_package_stub_path("packages/nunomaduro/larastan/phpstan.neon.stub"),
-            base_path("phpstan.neon")
+            setup_package_stub_path('packages/nunomaduro/larastan/phpstan.neon.stub'),
+            base_path('phpstan.neon')
         );
 
-        $this->info("Generated file " . base_path("phpstan.neon") . " for package {$this->packageName()}.");
+        $this->info('Generated file ' . base_path('phpstan.neon') . " for package {$this->packageName()}.");
     }
 }

@@ -33,7 +33,7 @@ class DependableTasksDoesNotReturnEmptyDependenciesTest extends TestCase
             $this->assertNotEmpty(
                 (new $class)->dependsOn(),
                 "The class $class implements the Dependable interface but returns empty dependencies array." . PHP_EOL
-                . "This class must either return a non-empty array of dependencies, or not implement this interface."
+                . 'This class must either return a non-empty array of dependencies, or not implement this interface.'
             );
         }
     }

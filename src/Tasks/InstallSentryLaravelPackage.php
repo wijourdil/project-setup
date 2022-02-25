@@ -21,8 +21,8 @@ class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Co
     public function configure(): void
     {
         copy(
-            base_path("vendor/sentry/sentry-laravel/config/sentry.php"),
-            config_path("sentry.php")
+            base_path('vendor/sentry/sentry-laravel/config/sentry.php'),
+            config_path('sentry.php')
         );
 
         $this->remind();
@@ -31,10 +31,10 @@ class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Co
     private function remind(): void
     {
         $this->note([
-            "Before continuing, you need to manually do the following things:",
+            'Before continuing, you need to manually do the following things:',
             $this->isLumen()
-                ? "Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen, then type Enter..."
-                : "Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel, then type Enter...",
+                ? 'Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen, then type Enter...'
+                : 'Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel, then type Enter...',
         ]);
 
         readline();

@@ -31,12 +31,12 @@ class InstallPhpstanSafeRulePackage extends ComposerDevPackageInstaller implemen
     {
         $this->appendContentInFile(
             "\n    - ./vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon",
-            "includes:",
+            'includes:',
             base_path('phpstan.neon')
         );
 
         $this->info(
-            "Configuration file " . base_path('phpstan.neon') . " had been updated for package {$this->packageName()}."
+            'Configuration file ' . base_path('phpstan.neon') . " had been updated for package {$this->packageName()}."
         );
     }
 }

@@ -10,7 +10,7 @@ trait CanWriteInFiles
     {
         $fileContent = file_get_contents($filename);
 
-        if (false === $fileContent) {
+        if ($fileContent === false) {
             throw new Exception("Can't get content for file $filename");
         }
 

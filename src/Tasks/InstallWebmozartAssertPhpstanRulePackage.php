@@ -31,12 +31,12 @@ class InstallWebmozartAssertPhpstanRulePackage extends ComposerDevPackageInstall
     {
         $this->appendContentInFile(
             "\n    - ./vendor/phpstan/phpstan-webmozart-assert/extension.neon",
-            "includes:",
+            'includes:',
             base_path('phpstan.neon')
         );
 
         $this->info(
-            "Configuration file " . base_path('phpstan.neon') . " had been updated for package {$this->packageName()}."
+            'Configuration file ' . base_path('phpstan.neon') . " had been updated for package {$this->packageName()}."
         );
     }
 }

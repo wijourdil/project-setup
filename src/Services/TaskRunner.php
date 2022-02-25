@@ -65,7 +65,7 @@ class TaskRunner
 
             $this->output->info("Task '$title' executed successfully!");
         } catch (Throwable $exception) {
-            $this->output->error("Something went wrong: " . $exception->getMessage());
+            $this->output->error('Something went wrong: ' . $exception->getMessage());
             throw $exception;
         }
 
@@ -77,7 +77,7 @@ class TaskRunner
         foreach ($task->dependsOn() as $dependency) {
             if (!in_array($dependency, $this->executedTasks)) {
                 throw new RuntimeException(
-                    "Cannot execute task " . $task::class
+                    'Cannot execute task ' . $task::class
                     . " because its dependency {$dependency} was not executed before"
                 );
             }
