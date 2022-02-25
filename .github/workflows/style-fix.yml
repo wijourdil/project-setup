@@ -17,9 +17,6 @@ jobs:
       - name: Install Composer Dependencies
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Copy .env file
-        run: cp .env.example .env
-
       - name: Execute style fix
         run: |
           vendor/bin/php-cs-fixer fix || true
