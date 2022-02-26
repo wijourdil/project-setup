@@ -41,7 +41,7 @@ class InstallAssertPhpstanRulePackage extends InstallComposerPackage implements 
     public function alreadyConfigured(): bool
     {
         return str_contains(
-            (string)file_get_contents(base_path('phpstan.neon')),
+            (string) file_get_contents(base_path('phpstan.neon')),
             'vendor/phpstan/phpstan-webmozart-assert/extension.neon'
         );
     }
