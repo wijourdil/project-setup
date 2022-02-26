@@ -38,7 +38,7 @@ class InstallAssertPackageTest extends TestCase
         (new FakePackageInstaller)->install(self::PACKAGE);
 
         $this->artisan('project-setup:run')
-            ->expectsQuestion("Task 'Install Assert Package' seems to be already installed, would you re-install it ?", "y")
+            ->expectsQuestion("Task 'Install Assert Package' seems to be already installed, would you re-install it ?", 'y')
             ->assertSuccessful();
 
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));

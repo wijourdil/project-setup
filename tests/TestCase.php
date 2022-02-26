@@ -16,7 +16,7 @@ abstract class TestCase extends Orchestra
 
     protected function deleteFiles(array|string $filenames): void
     {
-        foreach ((array)$filenames as $filename) {
+        foreach ((array) $filenames as $filename) {
             if (file_exists($filename)) {
                 unlink($filename);
             }

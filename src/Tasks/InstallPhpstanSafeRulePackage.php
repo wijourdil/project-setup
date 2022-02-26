@@ -42,7 +42,7 @@ class InstallPhpstanSafeRulePackage extends InstallComposerPackage implements Co
     {
         return str_contains(
             file_get_contents(base_path('phpstan.neon')),
-            "vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon"
+            'vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon'
         );
     }
 }

@@ -37,7 +37,7 @@ class CreateMakefileTest extends TestCase
         $this->artisan('project-setup:run --force-run')->assertSuccessful();
 
         $this->assertFileEquals(
-            setup_package_stub_path("makefile/Makefile.laravel.stub"),
+            setup_package_stub_path('makefile/Makefile.laravel.stub'),
             base_path('Makefile'),
         );
     }

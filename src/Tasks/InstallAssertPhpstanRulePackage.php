@@ -42,7 +42,7 @@ class InstallAssertPhpstanRulePackage extends InstallComposerPackage implements 
     {
         return str_contains(
             file_get_contents(base_path('phpstan.neon')),
-            "vendor/phpstan/phpstan-webmozart-assert/extension.neon"
+            'vendor/phpstan/phpstan-webmozart-assert/extension.neon'
         );
     }
 }

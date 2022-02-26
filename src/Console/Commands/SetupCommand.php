@@ -18,6 +18,7 @@ class SetupCommand extends Command
     {
         if ($this->option('force-run') === true && $this->option('force-ignore') === true) {
             $this->output->error("You can't use both options --force-run and --force-ignore");
+
             return self::INVALID;
         }
 
@@ -37,6 +38,7 @@ class SetupCommand extends Command
             $runner->run($this->tasksToRun());
         } catch (Throwable $exception) {
             $this->output->error($exception->getMessage());
+
             return self::FAILURE;
         }
 
