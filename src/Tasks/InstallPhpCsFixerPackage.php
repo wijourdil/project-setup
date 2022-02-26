@@ -2,18 +2,19 @@
 
 namespace Wijourdil\ProjectSetup\Tasks;
 
-use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerDevPackageInstaller;
+use Wijourdil\ProjectSetup\Tasks\Abstracts\InstallComposerPackage;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Configurable;
-use Wijourdil\ProjectSetup\Tasks\Contracts\Outputable;
-use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
-class InstallPhpCsFixerPackage extends ComposerDevPackageInstaller implements Configurable, Outputable
+class InstallPhpCsFixerPackage extends InstallComposerPackage implements Configurable
 {
-    use CanWriteToOutput;
-
     protected function packageName(): string
     {
         return 'friendsofphp/php-cs-fixer';
+    }
+
+    protected function isDevDependency(): bool
+    {
+        return true;
     }
 
     public function configure(): void
@@ -22,7 +23,10 @@ class InstallPhpCsFixerPackage extends ComposerDevPackageInstaller implements Co
             setup_package_stub_path('packages/friendsofphp/php-cs-fixer/php-cs-fixer.dist.php.stub'),
             base_path('php-cs-fixer.dist.php')
         );
+    }
 
-        $this->info('Generated file ' . base_path('php-cs-fixer.dist.php') . " for package {$this->packageName()}.");
+    public function alreadyConfigured(): bool
+    {
+        return file_exists(base_path('php-cs-fixer.dist.php'));
     }
 }

@@ -2,12 +2,17 @@
 
 namespace Wijourdil\ProjectSetup\Tasks;
 
-use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerPackageInstaller;
+use Wijourdil\ProjectSetup\Tasks\Abstracts\InstallComposerPackage;
 
-class InstallSafePackage extends ComposerPackageInstaller
+class InstallSafePackage extends InstallComposerPackage
 {
     protected function packageName(): string
     {
         return 'thecodingmachine/safe';
+    }
+
+    protected function isDevDependency(): bool
+    {
+        return false;
     }
 }

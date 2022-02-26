@@ -22,4 +22,9 @@ class CreateMakefile implements Executable
             base_path('Makefile')
         );
     }
+
+    public function alreadyExecuted(): bool
+    {
+        return file_exists(base_path('Makefile'));
+    }
 }
