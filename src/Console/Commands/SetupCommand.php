@@ -54,7 +54,7 @@ class SetupCommand extends Command
         $tasks = config('project-setup.tasks');
 
         if (!is_array($tasks)) {
-            throw new RuntimeException("Configuration project-setup.tasks must be an array.");
+            throw new RuntimeException('Configuration project-setup.tasks must be an array.');
         }
 
         return $tasks;
