@@ -173,8 +173,9 @@ class TaskRunner
     private function askIfTaskShouldBeRunAgain(string $question): bool
     {
         if ($this->ignoreAlreadyRanTasks == false && $this->reRunAlreadyRanTasks == false) {
+            /** @var string|null $answer */
             $answer = $this->output->ask($question, 'yes/NO');
-            $mustRun = in_array(mb_strtolower($answer), ['y', 'yes']);
+            $mustRun = in_array(mb_strtolower((string)$answer), ['y', 'yes']);
         } else {
             $mustRun = (!$this->ignoreAlreadyRanTasks && $this->reRunAlreadyRanTasks);
         }

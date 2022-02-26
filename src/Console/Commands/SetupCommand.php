@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Console\Commands;
 
 use Illuminate\Console\Command;
+use RuntimeException;
 use Throwable;
 use Wijourdil\ProjectSetup\Services\TaskRunner;
 
@@ -12,7 +13,7 @@ class SetupCommand extends Command
                             {--r|force-run : Force to re-run already ran tasks}
                             {--i|force-ignore : Force to ignore already ran tasks}';
 
-    protected $description = 'Run all tasks to install, execute and configure everything is necessary to setup a project';
+    protected $description = 'Run all tasks to install, execute and configure everything necessary to setup a project';
 
     public function handle(): int
     {
@@ -50,6 +51,12 @@ class SetupCommand extends Command
      */
     protected function tasksToRun(): array
     {
-        return config('project-setup.tasks');
+        $tasks = config('project-setup.tasks');
+
+        if (!is_array($tasks)) {
+            throw new RuntimeException("Configuration project-setup.tasks must be an array.");
+        }
+
+        return $tasks;
     }
 }
