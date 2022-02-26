@@ -25,13 +25,13 @@ class InstallSentryLaravelPackage extends InstallComposerPackage implements Conf
     {
         copy(
             base_path('vendor/sentry/sentry-laravel/config/sentry.php'),
-            config_path('sentry.php')
+            base_path('config/sentry.php')
         );
     }
 
     public function alreadyConfigured(): bool
     {
-        return file_exists(config_path('sentry.php'));
+        return file_exists(base_path('config/sentry.php'));
     }
 
     public function getManualActions(): array
