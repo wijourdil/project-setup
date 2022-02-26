@@ -3,29 +3,42 @@
 namespace Wijourdil\ProjectSetup\Console\Commands;
 
 use Illuminate\Console\Command;
+use Throwable;
 use Wijourdil\ProjectSetup\Services\TaskRunner;
-use Wijourdil\ProjectSetup\Tasks\CreateGithubActionsWorkflows;
-use Wijourdil\ProjectSetup\Tasks\CreateMakefile;
-use Wijourdil\ProjectSetup\Tasks\DeleteDefaultPhpunitTests;
-use Wijourdil\ProjectSetup\Tasks\InstallAssertPackage;
-use Wijourdil\ProjectSetup\Tasks\InstallCodeSnifferPackage;
-use Wijourdil\ProjectSetup\Tasks\InstallLarastanPackage;
-use Wijourdil\ProjectSetup\Tasks\InstallLaravelSailPackage;
-use Wijourdil\ProjectSetup\Tasks\InstallPhpCsFixerPackage;
-use Wijourdil\ProjectSetup\Tasks\InstallPhpstanSafeRulePackage;
-use Wijourdil\ProjectSetup\Tasks\InstallSafePackage;
-use Wijourdil\ProjectSetup\Tasks\InstallSentryLaravelPackage;
-use Wijourdil\ProjectSetup\Tasks\InstallWebmozartAssertPhpstanRulePackage;
 
 class SetupCommand extends Command
 {
-    protected $signature = 'project-setup:run';
+    protected $signature = 'project-setup:run 
+                            {--r|force-run : Force to re-run already ran tasks}
+                            {--i|force-ignore : Force to ignore already ran tasks}';
 
-    protected $description = 'blablablabla';
+    protected $description = 'Run all tasks to install, execute and configure everything is necessary to setup a project';
 
     public function handle(): int
     {
-        (new TaskRunner())->run($this->tasksToRun());
+        if ($this->option('force-run') === true && $this->option('force-ignore') === true) {
+            $this->output->error("You can't use both options --force-run and --force-ignore");
+            return self::INVALID;
+        }
+
+        $runner = new TaskRunner($this->input, $this->output);
+
+        if ($this->option('force-run') === true) {
+            $runner->reRunAlreadyRanTasks();
+        }
+        if ($this->option('force-ignore') === true) {
+            $runner->ignoreAlreadyRanTasks();
+        }
+        if ($this->option('no-interaction') === true) {
+            $runner->withoutInteraction();
+        }
+
+        try {
+            $runner->run($this->tasksToRun());
+        } catch (Throwable $exception) {
+            $this->output->error($exception->getMessage());
+            return self::FAILURE;
+        }
 
         return self::SUCCESS;
     }
@@ -35,26 +48,6 @@ class SetupCommand extends Command
      */
     protected function tasksToRun(): array
     {
-        return [
-            // Code quality & tools
-            new InstallAssertPackage(),
-            new InstallLarastanPackage(),
-            new InstallSafePackage(),
-            new InstallCodeSnifferPackage(),
-            new InstallPhpCsFixerPackage(),
-            new InstallPhpstanSafeRulePackage(),
-            new InstallWebmozartAssertPhpstanRulePackage(),
-
-            // Error handling
-            new InstallSentryLaravelPackage(),
-
-            // Dev environment
-            new InstallLaravelSailPackage(),
-
-            // Prepare project files
-            new CreateMakefile(),
-            new CreateGithubActionsWorkflows(),
-            new DeleteDefaultPhpunitTests(),
-        ];
+        return config('project-setup.tasks');
     }
 }

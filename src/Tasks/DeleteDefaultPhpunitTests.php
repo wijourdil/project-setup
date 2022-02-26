@@ -16,4 +16,10 @@ class DeleteDefaultPhpunitTests implements Executable
             unlink(base_path('tests/Unit/ExampleTest.php'));
         }
     }
+
+    public function alreadyExecuted(): bool
+    {
+        return !file_exists(base_path('tests/Feature/ExampleTest.php')) &&
+            !file_exists(base_path('tests/Unit/ExampleTest.php'));
+    }
 }

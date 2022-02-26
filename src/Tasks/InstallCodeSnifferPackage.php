@@ -2,18 +2,19 @@
 
 namespace Wijourdil\ProjectSetup\Tasks;
 
-use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerDevPackageInstaller;
+use Wijourdil\ProjectSetup\Tasks\Abstracts\InstallComposerPackage;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Configurable;
-use Wijourdil\ProjectSetup\Tasks\Contracts\Outputable;
-use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
-class InstallCodeSnifferPackage extends ComposerDevPackageInstaller implements Configurable, Outputable
+class InstallCodeSnifferPackage extends InstallComposerPackage implements Configurable
 {
-    use CanWriteToOutput;
-
     protected function packageName(): string
     {
         return 'squizlabs/php_codesniffer';
+    }
+
+    protected function isDevDependency(): bool
+    {
+        return true;
     }
 
     public function configure(): void
@@ -22,7 +23,10 @@ class InstallCodeSnifferPackage extends ComposerDevPackageInstaller implements C
             setup_package_stub_path('packages/squizlabs/php_codesniffer/phpcs.xml.stub'),
             base_path('phpcs.xml')
         );
+    }
 
-        $this->info('Generated file ' . base_path('phpcs.xml') . " for package {$this->packageName()}.");
+    public function alreadyConfigured(): bool
+    {
+        return file_exists(base_path('phpcs.xml'));
     }
 }

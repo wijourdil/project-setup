@@ -4,7 +4,7 @@
 .phpunit.result.cache
 build
 composer.lock
-coverage
+code_coverage
 docs
 phpunit.xml
 testbench.yaml

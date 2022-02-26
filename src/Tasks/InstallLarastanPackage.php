@@ -2,18 +2,19 @@
 
 namespace Wijourdil\ProjectSetup\Tasks;
 
-use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerDevPackageInstaller;
+use Wijourdil\ProjectSetup\Tasks\Abstracts\InstallComposerPackage;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Configurable;
-use Wijourdil\ProjectSetup\Tasks\Contracts\Outputable;
-use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
-class InstallLarastanPackage extends ComposerDevPackageInstaller implements Configurable, Outputable
+class InstallLarastanPackage extends InstallComposerPackage implements Configurable
 {
-    use CanWriteToOutput;
-
     protected function packageName(): string
     {
         return 'nunomaduro/larastan';
+    }
+
+    protected function isDevDependency(): bool
+    {
+        return true;
     }
 
     public function configure(): void
@@ -22,7 +23,10 @@ class InstallLarastanPackage extends ComposerDevPackageInstaller implements Conf
             setup_package_stub_path('packages/nunomaduro/larastan/phpstan.neon.stub'),
             base_path('phpstan.neon')
         );
+    }
 
-        $this->info('Generated file ' . base_path('phpstan.neon') . " for package {$this->packageName()}.");
+    public function alreadyConfigured(): bool
+    {
+        return file_exists(base_path('phpstan.neon'));
     }
 }

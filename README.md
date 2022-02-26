@@ -13,3 +13,8 @@ composer require wijourdil/project-setup --dev
 ```shell
 php artisan project-setup:run
 ```
+
+### See all available options:
+```shell
+php artisan project-setup:run -h
+```

@@ -2,14 +2,19 @@
 
 namespace Wijourdil\ProjectSetup\Tasks;
 
-use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerDevPackageInstaller;
+use Wijourdil\ProjectSetup\Tasks\Abstracts\InstallComposerPackage;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Configurable;
 
-class InstallLaravelSailPackage extends ComposerDevPackageInstaller implements Configurable
+class InstallLaravelSailPackage extends InstallComposerPackage implements Configurable
 {
     protected function packageName(): string
     {
         return 'laravel/sail';
+    }
+
+    protected function isDevDependency(): bool
+    {
+        return true;
     }
 
     public function configure(): void
@@ -26,5 +31,10 @@ class InstallLaravelSailPackage extends ComposerDevPackageInstaller implements C
             setup_package_stub_path('packages/laravel/sail/docker-init/init.sql.stub'),
             base_path('docker-init/init.sql')
         );
+    }
+
+    public function alreadyConfigured(): bool
+    {
+        return file_exists(base_path('docker-compose.yml')) && file_exists(base_path('docker-init/init.sql'));
     }
 }

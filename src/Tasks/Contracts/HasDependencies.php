@@ -2,7 +2,7 @@
 
 namespace Wijourdil\ProjectSetup\Tasks\Contracts;
 
-interface Dependable
+interface HasDependencies
 {
     /**
      * @return array<class-string>

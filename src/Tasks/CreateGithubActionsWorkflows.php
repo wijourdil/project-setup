@@ -3,12 +3,9 @@
 namespace Wijourdil\ProjectSetup\Tasks;
 
 use Wijourdil\ProjectSetup\Tasks\Contracts\Executable;
-use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
 class CreateGithubActionsWorkflows implements Executable
 {
-    use CanWriteToOutput;
-
     public function execute(): void
     {
         if (!file_exists(base_path('.github/workflows'))) {
@@ -29,7 +26,12 @@ class CreateGithubActionsWorkflows implements Executable
             setup_package_stub_path('github-actions/tests.yml.stub'),
             base_path('.github/workflows/tests.yml')
         );
+    }
 
-        $this->info('Generated Github Actions files in ' . base_path('.github/workflows') . '.');
+    public function alreadyExecuted(): bool
+    {
+        return file_exists(base_path('.github/workflows/deploy.yml')) &&
+            file_exists(base_path('.github/workflows/style-fix.yml')) &&
+            file_exists(base_path('.github/workflows/tests.yml'));
     }
 }

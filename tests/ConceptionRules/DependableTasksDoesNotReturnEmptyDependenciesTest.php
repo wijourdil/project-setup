@@ -1,9 +1,10 @@
 <?php
 
-namespace Wijourdil\ProjectSetup\Tests;
+namespace Wijourdil\ProjectSetup\Tests\ConceptionRules;
 
 use Illuminate\Support\Collection;
-use Wijourdil\ProjectSetup\Tasks\Contracts\Dependable;
+use Wijourdil\ProjectSetup\Tasks\Contracts\HasDependencies;
+use Wijourdil\ProjectSetup\Tests\TestCase;
 
 class DependableTasksDoesNotReturnEmptyDependenciesTest extends TestCase
 {
@@ -23,7 +24,7 @@ class DependableTasksDoesNotReturnEmptyDependenciesTest extends TestCase
             })
             ->filter(function (string $item) {
                 return in_array(
-                    Dependable::class,
+                    HasDependencies::class,
                     class_implements($item)
                 );
             })

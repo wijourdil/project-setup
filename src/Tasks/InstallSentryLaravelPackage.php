@@ -2,20 +2,23 @@
 
 namespace Wijourdil\ProjectSetup\Tasks;
 
-use Wijourdil\ProjectSetup\Tasks\Abstracts\ComposerPackageInstaller;
+use Wijourdil\ProjectSetup\Tasks\Abstracts\InstallComposerPackage;
 use Wijourdil\ProjectSetup\Tasks\Contracts\Configurable;
-use Wijourdil\ProjectSetup\Tasks\Contracts\Outputable;
+use Wijourdil\ProjectSetup\Tasks\Contracts\NeedsManualActions;
 use Wijourdil\ProjectSetup\Tasks\Traits\CanDetermineFramework;
-use Wijourdil\ProjectSetup\Tasks\Traits\CanWriteToOutput;
 
-class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Configurable, Outputable
+class InstallSentryLaravelPackage extends InstallComposerPackage implements Configurable, NeedsManualActions
 {
     use CanDetermineFramework;
-    use CanWriteToOutput;
 
     protected function packageName(): string
     {
         return 'sentry/sentry-laravel';
+    }
+
+    protected function isDevDependency(): bool
+    {
+        return false;
     }
 
     public function configure(): void
@@ -24,19 +27,22 @@ class InstallSentryLaravelPackage extends ComposerPackageInstaller implements Co
             base_path('vendor/sentry/sentry-laravel/config/sentry.php'),
             config_path('sentry.php')
         );
-
-        $this->remind();
     }
 
-    private function remind(): void
+    public function alreadyConfigured(): bool
     {
-        $this->note([
-            'Before continuing, you need to manually do the following things:',
-            $this->isLumen()
-                ? 'Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen, then type Enter...'
-                : 'Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel, then type Enter...',
-        ]);
+        return file_exists(config_path('sentry.php'));
+    }
 
-        readline();
+    public function getManualActions(): array
+    {
+        return [
+            [
+                'Before continuing, you need to manually do the following things:',
+                $this->isLumen()
+                    ? 'Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen, then type Enter...'
+                    : 'Please follow instructions here: https://docs.sentry.io/platforms/php/guides/laravel, then type Enter...',
+            ],
+        ];
     }
 }
