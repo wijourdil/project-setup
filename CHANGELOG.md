@@ -2,6 +2,10 @@
 
 All notable changes to `wijourdil/project-setup` will be documented in this file.
 
+## 1.1.2 - 2022-02-27
+
+- fix: publish the `php-cs-fixer` package configuration file with the correct name
+
 ## 1.1.1 - 2022-02-26
 
 - fix an error on lumen, where `config_path()` does not exist
