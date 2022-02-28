@@ -21,12 +21,12 @@ class InstallPhpCsFixerPackage extends InstallComposerPackage implements Configu
     {
         copy(
             setup_package_stub_path('packages/friendsofphp/php-cs-fixer/php-cs-fixer.dist.php.stub'),
-            base_path('php-cs-fixer.dist.php')
+            base_path('.php-cs-fixer.dist.php')
         );
     }
 
     public function alreadyConfigured(): bool
     {
-        return file_exists(base_path('php-cs-fixer.dist.php'));
+        return file_exists(base_path('.php-cs-fixer.dist.php'));
     }
 }

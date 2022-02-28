@@ -17,7 +17,7 @@ class InstallPhpCsFixerPackageTest extends TestCase
 
         FakePackageInstaller::reset();
 
-        $this->deleteFiles(base_path('php-cs-fixer.dist.php'));
+        $this->deleteFiles(base_path('.php-cs-fixer.dist.php'));
 
         Config::set('project-setup.tasks', [
             new InstallPhpCsFixerPackage(),
@@ -37,10 +37,10 @@ class InstallPhpCsFixerPackageTest extends TestCase
     /** @test */
     public function it_can_configure_package()
     {
-        $this->assertFileDoesNotExist(base_path('php-cs-fixer.dist.php'));
+        $this->assertFileDoesNotExist(base_path('.php-cs-fixer.dist.php'));
 
         $this->artisan('project-setup:run --no-interaction')->assertSuccessful();
 
-        $this->assertFileExists(base_path('php-cs-fixer.dist.php'));
+        $this->assertFileExists(base_path('.php-cs-fixer.dist.php'));
     }
 }
