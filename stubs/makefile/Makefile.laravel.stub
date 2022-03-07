@@ -1,44 +1,41 @@
 #!Make
 
+.PHONY: help
+
 include .env
 
-# Setup project
-setup: .env .env.testing
+help: ## Show available commands
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sed 's/Makefile://' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+setup: .env .env.testing ## Setup project
 	composer install
 	make db
 	make build
 
-# Install database
-db:
+db: ## Install databases
 	echo 'CREATE DATABASE IF NOT EXISTS `$(DB_DATABASE)`' | mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) -h$(DB_HOST)
 	echo 'CREATE DATABASE IF NOT EXISTS `$(DB_DATABASE)_test`' | mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) -h$(DB_HOST)
 	make fresh
 
-# Build assets
-build:
+build: ## Build assets
 	npm install
 	npx mix
 
-# Refresh and seed database
-fresh:
+fresh: ## Refresh and seed database
 	php artisan migrate:fresh --seed
 	php artisan migrate:fresh --env=testing
 
-# Run phpunit with coverage
-coverage:
+coverage: ## Run phpunit with coverage
 	./vendor/bin/phpunit --coverage-html code_coverage
 
-# Run the whole test suite (security checker + phpcs + phpstan + phpunit without coverage)
-test:
+test: ## Run the whole test suite (security checker + phpcs + phpstan + phpunit without coverage)
 	symfony security:check;
 	./vendor/bin/phpcs
 	./vendor/bin/phpstan analyse --memory-limit=2G
 	./vendor/bin/phpunit --no-coverage
 
-# Dependency : .env
 .env:
 	cp .env.example .env
 
-# Dependency : .env.testing
 .env.testing:
 	cp .env.example .env.testing

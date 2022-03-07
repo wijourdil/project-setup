@@ -1,6 +1,12 @@
 # Changelog
 
-All notable changes to `wijourdil/project-setup` will be documented in this file.
+## 1.1.4 - 2022-03-07
+
+- fix: update the Makefile stubs to add the command `make help`
+
+## 1.1.3 - 2022-03-07
+
+- fix: use cache for composer dependencies in style-fix.yml workflow stub
 
 ## 1.1.2 - 2022-02-27
 
