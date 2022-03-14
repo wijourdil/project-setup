@@ -18,11 +18,6 @@ class CreateGithubActionsWorkflows implements Executable
         );
 
         copy(
-            setup_package_stub_path('github-actions/style-fix.yml.stub'),
-            base_path('.github/workflows/style-fix.yml')
-        );
-
-        copy(
             setup_package_stub_path('github-actions/tests.yml.stub'),
             base_path('.github/workflows/tests.yml')
         );
@@ -31,7 +26,6 @@ class CreateGithubActionsWorkflows implements Executable
     public function alreadyExecuted(): bool
     {
         return file_exists(base_path('.github/workflows/deploy.yml')) &&
-            file_exists(base_path('.github/workflows/style-fix.yml')) &&
             file_exists(base_path('.github/workflows/tests.yml'));
     }
 }

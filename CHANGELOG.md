@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.5 - 2022-03-14
+
+- fix: update the github workflows files to run style-fix into the tests workflow 
+
 ## 1.1.4 - 2022-03-07
 
 - fix: update the Makefile stubs to add the command `make help`
