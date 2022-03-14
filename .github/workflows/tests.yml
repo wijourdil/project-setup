@@ -5,11 +5,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          tools: composer:v2
+          tools: composer:v2, cs2pr
           coverage: none
 
       - uses: actions/checkout@v2
@@ -17,11 +18,26 @@ jobs:
       - name: Install Composer Dependencies
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Running phpcs
+      - name: Execute style fix
+        run: |
+          vendor/bin/php-cs-fixer fix || true
+          vendor/bin/phpcbf || true
+
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "bot@github.actions"
+
+      - name: Commit style-fix modifications
+        run: |
+          git add -u
+          (git commit -m ":art: Auto style fix" && git push origin) || true
+
+      - name: Run phpcs
         run: ./vendor/bin/phpcs --report=full
 
-      - name: Running phpstan
+      - name: Run phpstan
         run: ./vendor/bin/phpstan analyse --memory-limit=2G
 
-      - name: Running phpunit
+      - name: Run phpunit
         run: ./vendor/bin/phpunit --no-coverage

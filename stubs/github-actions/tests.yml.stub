@@ -6,53 +6,62 @@ jobs:
 
     steps:
 
-      # Setup
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          tools: composer:v2
+          tools: composer:v2, cs2pr
           coverage: none
 
       - uses: actions/checkout@v2
 
-      # Cache npm dependencies
-      - uses: actions/cache@v2
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # Cache composer dependencies
-      - name: Get Composer Cache Directory
+      - name: Get composer cache directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - uses: actions/cache@v2
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      # Preparing environment
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Starting MySQL
+      - name: Start MySQL
         run: sudo systemctl start mysql.service
 
-      - name: Creating database
+      - name: Create database
         run: echo "CREATE DATABASE homestead;" | mysql -uroot -proot
 
-      - name: Building assets
-        run: |
-          npm install
-          npm run production
-
-      - name: Installing PHP dependencies
+      - name: Install PHP dependencies
         run: composer install --prefer-dist --no-interaction
+
+      - name: Execute style fix
+        run: |
+          vendor/bin/php-cs-fixer fix || true
+          vendor/bin/phpcbf || true
+
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "bot@github.actions"
+
+      - name: Commit style-fix modifications
+        run: |
+          git add -u
+          (git commit -m ":art: Auto style fix" && git push origin) || true
 
       - name: Tests migrations
         run: |
@@ -60,12 +69,16 @@ jobs:
           php artisan migrate:rollback
           php artisan migrate
 
-      # Tests
-      - name: Running phpcs
+      - name: Build assets
+        run: |
+          npm install
+          npm run production
+
+      - name: Run phpcs
         run: ./vendor/bin/phpcs --report=full
 
-      - name: Running phpstan
+      - name: Run phpstan
         run: ./vendor/bin/phpstan analyse --memory-limit=2G
 
-      - name: Running phpunit
+      - name: Run phpunit
         run: ./vendor/bin/phpunit --no-coverage
