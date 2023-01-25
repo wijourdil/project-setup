@@ -1,5 +1,11 @@
 # Changelog
 
+<!-- Prefixes: "fix: ..." ; "new: ..." ; "update: ..." -->
+
+## 1.2.0 - 2023-01-25
+
+- update: generate config for PHP 8.2
+
 ## 1.1.5 - 2022-03-14
 
 - fix: update the github workflows files to run style-fix into the tests workflow 
