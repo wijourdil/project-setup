@@ -2,6 +2,10 @@
 
 <!-- Prefixes: "fix: ..." ; "new: ..." ; "update: ..." -->
 
+## 2.0.0 - 2023-03-24
+
+- update: make package compatible for Laravel 10
+
 ## 1.2.0 - 2023-01-25
 
 - update: generate config for PHP 8.2
