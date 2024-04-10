@@ -3,12 +3,13 @@
 namespace Wijourdil\ProjectSetup\Tests\ConceptionRules;
 
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Tasks\Contracts\HasDependencies;
 use Wijourdil\ProjectSetup\Tests\TestCase;
 
 class TasksHavingDependenciesDoesNotReturnEmptyDependenciesTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function tasks_having_dependencies_does_not_return_empty_dependencies()
     {
         /// The classes implementing the HasDependencies interface MUST return a non-empty array of dependencies
