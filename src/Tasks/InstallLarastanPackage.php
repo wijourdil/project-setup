@@ -9,7 +9,7 @@ class InstallLarastanPackage extends InstallComposerPackage implements Configura
 {
     protected function packageName(): string
     {
-        return 'nunomaduro/larastan';
+        return 'larastan/larastan';
     }
 
     protected function isDevDependency(): bool
@@ -20,7 +20,7 @@ class InstallLarastanPackage extends InstallComposerPackage implements Configura
     public function configure(): void
     {
         copy(
-            setup_package_stub_path('packages/nunomaduro/larastan/phpstan.neon.stub'),
+            setup_package_stub_path('packages/larastan/larastan/phpstan.neon.stub'),
             base_path('phpstan.neon')
         );
     }

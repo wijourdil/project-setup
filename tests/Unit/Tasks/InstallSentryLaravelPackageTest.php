@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Services\PackageInstaller\FakePackageInstaller;
 use Wijourdil\ProjectSetup\Tasks\InstallSentryLaravelPackage;
 use Wijourdil\ProjectSetup\Tests\TestCase;
@@ -26,7 +27,7 @@ class InstallSentryLaravelPackageTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_package()
     {
         $this->assertFalse((new FakePackageInstaller)->isInstalled(self::PACKAGE));
@@ -36,7 +37,7 @@ class InstallSentryLaravelPackageTest extends TestCase
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_configure_package()
     {
         $this->assertFileDoesNotExist(config_path('sentry.php'));

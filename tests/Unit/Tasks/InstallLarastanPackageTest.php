@@ -3,13 +3,14 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Services\PackageInstaller\FakePackageInstaller;
 use Wijourdil\ProjectSetup\Tasks\InstallLarastanPackage;
 use Wijourdil\ProjectSetup\Tests\TestCase;
 
 class InstallLarastanPackageTest extends TestCase
 {
-    private const PACKAGE = 'nunomaduro/larastan';
+    private const PACKAGE = 'larastan/larastan';
 
     protected function setUp(): void
     {
@@ -24,7 +25,7 @@ class InstallLarastanPackageTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_package()
     {
         $this->assertFalse((new FakePackageInstaller)->isInstalled(self::PACKAGE));
@@ -34,7 +35,7 @@ class InstallLarastanPackageTest extends TestCase
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_configure_package()
     {
         $this->assertFileDoesNotExist(base_path('phpstan.neon'));

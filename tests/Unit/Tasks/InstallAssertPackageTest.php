@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Services\PackageInstaller\FakePackageInstaller;
 use Wijourdil\ProjectSetup\Tasks\InstallAssertPackage;
 use Wijourdil\ProjectSetup\Tests\TestCase;
@@ -22,7 +23,7 @@ class InstallAssertPackageTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_package()
     {
         $this->assertFalse((new FakePackageInstaller)->isInstalled(self::PACKAGE));
@@ -32,7 +33,7 @@ class InstallAssertPackageTest extends TestCase
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_reinstall_package()
     {
         (new FakePackageInstaller)->install(self::PACKAGE);
@@ -44,7 +45,7 @@ class InstallAssertPackageTest extends TestCase
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_force_reinstall_package()
     {
         (new FakePackageInstaller)->install(self::PACKAGE);
@@ -55,7 +56,7 @@ class InstallAssertPackageTest extends TestCase
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_force_ignore_package()
     {
         (new FakePackageInstaller)->install(self::PACKAGE);

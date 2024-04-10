@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Tasks\DeleteDefaultPhpunitTests;
 use Wijourdil\ProjectSetup\Tests\TestCase;
 
@@ -20,7 +21,7 @@ class DeleteDefaultPhpunitTestsTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_delete_default_phpunit_tests()
     {
         $this->assertFileExists(base_path('tests/Feature/ExampleTest.php'));

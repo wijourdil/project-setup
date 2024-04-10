@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Tasks\CreateMakefile;
 use Wijourdil\ProjectSetup\Tests\TestCase;
 
@@ -19,7 +20,7 @@ class CreateMakefileTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_makefile()
     {
         $this->assertFileDoesNotExist(base_path('Makefile'));
@@ -29,7 +30,7 @@ class CreateMakefileTest extends TestCase
         $this->assertFileExists(base_path('Makefile'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_overwrite_makefile_if_it_exists()
     {
         $this->createFile(base_path('Makefile'), 'test');
@@ -42,7 +43,7 @@ class CreateMakefileTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_overwrite_makefile_if_it_exists_if_ignore()
     {
         $this->createFile(base_path('Makefile'), 'test');

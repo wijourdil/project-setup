@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Services\PackageInstaller\FakePackageInstaller;
 use Wijourdil\ProjectSetup\Tasks\InstallAssertPackage;
 use Wijourdil\ProjectSetup\Tasks\InstallAssertPhpstanRulePackage;
@@ -29,7 +30,7 @@ class InstallAssertPhpstanRulePackageTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_package()
     {
         $this->assertFalse((new FakePackageInstaller)->isInstalled(self::PACKAGE));
@@ -39,7 +40,7 @@ class InstallAssertPhpstanRulePackageTest extends TestCase
         $this->assertTrue((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_cannot_install_package_without_dependencies()
     {
         Config::set('project-setup.tasks', [
@@ -53,7 +54,7 @@ class InstallAssertPhpstanRulePackageTest extends TestCase
         $this->assertFalse((new FakePackageInstaller)->isInstalled(self::PACKAGE));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_configure_package()
     {
         $this->artisan('project-setup:run --force-run --no-interaction')->assertSuccessful();
@@ -64,7 +65,7 @@ class InstallAssertPhpstanRulePackageTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_add_line_multiple_times_after_package_configuration()
     {
         $this->artisan('project-setup:run --force-run --no-interaction')->assertSuccessful();

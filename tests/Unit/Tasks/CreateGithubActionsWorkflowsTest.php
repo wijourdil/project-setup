@@ -3,6 +3,7 @@
 namespace Wijourdil\ProjectSetup\Tests\Unit\Tasks;
 
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Wijourdil\ProjectSetup\Tasks\CreateGithubActionsWorkflows;
 use Wijourdil\ProjectSetup\Tests\TestCase;
 
@@ -22,7 +23,7 @@ class CreateGithubActionsWorkflowsTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_github_actions_workflows_files()
     {
         $this->assertFileDoesNotExist(base_path('.github/workflows/deploy.yml'));
